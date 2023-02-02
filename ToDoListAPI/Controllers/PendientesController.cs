@@ -18,25 +18,59 @@ namespace ToDoListAPI.Controllers
 
         public IActionResult Get()
         {
-            return Ok(Repository.GetAll());
+            var lista = Repository.GetAll();
+
+            return Ok(lista);
         }
 
         [HttpPost]
-        public IActionResult Post()
+        public IActionResult Post(Actividade actividad)
         {
+            if (string.IsNullOrWhiteSpace(actividad.Descripcion))
+            {
+                return BadRequest("La descripción no debe estar vacío. Escriba una para continuar");
+            }
+
+            actividad.Id = 0;
+            Repository.Insert(actividad);
+
             return Ok();
         }
 
         [HttpPut]
-        public IActionResult Put()
+        public IActionResult Put(Actividade actividad)
         {
-            return Ok();
+            if (string.IsNullOrWhiteSpace(actividad.Descripcion))
+            {
+                return BadRequest("La descripción no debe estar vacío. Escriba una para continuar");
+            }
+
+            var act = Repository.GetByID(actividad.Id);
+
+            if (act != null)
+            {
+                act.Descripcion = actividad.Descripcion;
+                Repository.Update(act);
+                return Ok();
+            }
+            else
+                return NotFound();
+
         }
 
-        [HttpDelete]
-        public IActionResult Delete()
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
         {
-            return Ok();
+            var act = Repository.GetByID(id);
+
+            if (act != null)
+            {
+                Repository.Delete(act);
+                return Ok();
+            }
+            else
+                return NotFound();
+
         }
     }
 }
