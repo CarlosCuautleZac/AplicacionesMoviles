@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoList", "ToDoList\ToDoLi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ejercicio1", "Ejercicio1", "{7FC2E3F5-B7C8-457A-B194-4DE03199111F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoListAPI", "ToDoListAPI\ToDoListAPI.csproj", "{C4722786-0808-42EC-9BF4-38421554E007}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoListAPI", "ToDoListAPI\ToDoListAPI.csproj", "{C4722786-0808-42EC-9BF4-38421554E007}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PendientesApp", "PendientesApp\PendientesApp.csproj", "{03A2FF2E-59DA-4763-8696-783550105E52}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +27,12 @@ Global
 		{C4722786-0808-42EC-9BF4-38421554E007}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4722786-0808-42EC-9BF4-38421554E007}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4722786-0808-42EC-9BF4-38421554E007}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03A2FF2E-59DA-4763-8696-783550105E52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03A2FF2E-59DA-4763-8696-783550105E52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03A2FF2E-59DA-4763-8696-783550105E52}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{03A2FF2E-59DA-4763-8696-783550105E52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03A2FF2E-59DA-4763-8696-783550105E52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03A2FF2E-59DA-4763-8696-783550105E52}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -32,6 +40,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{5E40AADD-07EC-4014-A4AF-8D1F68F27ED7} = {7FC2E3F5-B7C8-457A-B194-4DE03199111F}
 		{C4722786-0808-42EC-9BF4-38421554E007} = {7FC2E3F5-B7C8-457A-B194-4DE03199111F}
+		{03A2FF2E-59DA-4763-8696-783550105E52} = {7FC2E3F5-B7C8-457A-B194-4DE03199111F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
