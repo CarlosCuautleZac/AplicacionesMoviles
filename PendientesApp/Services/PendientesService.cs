@@ -13,7 +13,8 @@ namespace PendientesApp.Services
     {
         HttpClient client;
         public PendientesService()
-        {
+        { 
+            client = new HttpClient();
             client.BaseAddress = new Uri("https://pendientes.sistemas19.com/");
         }
 
@@ -28,6 +29,19 @@ namespace PendientesApp.Services
                 Actividades = JsonConvert.DeserializeObject<List<Actividad>>(json);
             }
             return Actividades;
+        }
+
+        public async Task Insert(Actividad a)
+        {
+            var json = JsonConvert.SerializeObject(a);
+            StringContent scontent = new StringContent(json, Encoding.UTF8, "application/json");
+            var result = await client.PostAsync("api/pendientes", scontent);
+            if (!result.IsSuccessStatusCode)
+            {
+                json = await result.Content.ReadAsStringAsync();
+                string s = JsonConvert.DeserializeObject<string>(json);
+                throw new Exception($"Ha ocurrido un error: {result.StatusCode}\n{s}");
+            }
         }
     }
 }

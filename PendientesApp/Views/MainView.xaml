@@ -5,7 +5,7 @@
              x:Class="PendientesApp.Views.MainView"
              Title="Lista de pendientes">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Agregar"></ToolbarItem>
+        <ToolbarItem Text="Agregar" Command="{Binding NuevoCommand}"></ToolbarItem>
     </ContentPage.ToolbarItems>
 
     <ContentPage.BindingContext>
@@ -14,10 +14,10 @@
 
 
     <Grid RowDefinitions="*,auto">
-        <CollectionView ItemsSource="{Binding Actividades}">
+        <CollectionView ItemsSource="{Binding Actividades}" Margin="10">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Label Text="{Binding Descripcion}"></Label>
+                    <Label FontSize="Medium" Text="{Binding Descripcion}"></Label>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
