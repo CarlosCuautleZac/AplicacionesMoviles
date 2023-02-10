@@ -9,7 +9,7 @@
     </ContentPage.ToolbarItems>
 
     <ContentPage.BindingContext>
-        <vm:PendientesViewModel></vm:PendientesViewModel>
+        <vm:PendientesViewModel x:Name="vm"></vm:PendientesViewModel>
     </ContentPage.BindingContext>
 
 
@@ -17,7 +17,11 @@
         <CollectionView ItemsSource="{Binding Actividades}" Margin="10">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Label FontSize="Medium" Text="{Binding Descripcion}"></Label>
+                    <Label FontSize="Medium" Text="{Binding Descripcion}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={x:Reference vm}, Path=SeleccionarCommand}" CommandParameter="{Binding .}"></TapGestureRecognizer>
+                        </Label.GestureRecognizers>
+                    </Label>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

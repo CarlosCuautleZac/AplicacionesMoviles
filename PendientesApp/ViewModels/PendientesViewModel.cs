@@ -19,6 +19,8 @@ namespace PendientesApp.ViewModels
         public ICommand NuevoCommand { get; set; }
         public ICommand GuardarCommand { get; set; }
 
+        public ICommand SeleccionarCommand { get; set; }
+
         PendientesService pendientesService;
 
         public ObservableCollection<Actividad> Actividades { get; set; } = new();
@@ -34,10 +36,26 @@ namespace PendientesApp.ViewModels
         {
             NuevoCommand = new Command(Nuevo);
             GuardarCommand = new Command(Guardar);
+            SeleccionarCommand = new Command<Actividad>(Seleccionar);
 
             Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
             pendientesService = new();
             _ = CargarDatos();
+        }
+
+        private async void Seleccionar(Actividad actividad)
+        {
+#if ANDROID
+            if (actividadView == null)
+                actividadView = new() { BindingContext = this };
+#else
+            actividadView = new() { BindingContext = this };
+#endif
+
+            Error = "";
+            Actividad = actividad;
+            Actualizar(nameof(Actividad));
+            await Application.Current.MainPage.Navigation.PushAsync(actividadView);
         }
 
         private async void Guardar()
@@ -54,13 +72,20 @@ namespace PendientesApp.ViewModels
                 }
                 else
                 {
-                    await pendientesService.Insert(Actividad);
-                    _= CargarDatos();
+                    if (Actividad.Id == 0)
+                    {
+                        await pendientesService.Insert(Actividad);
+                    }
+                    else
+                    {
+                        await pendientesService.Update(Actividad);
+                    }
+                    _ = CargarDatos();
                     await Application.Current.MainPage.Navigation.PopAsync();
                 }
                 Actualizar();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Error = ex.Message;
                 Actualizar();
@@ -72,8 +97,14 @@ namespace PendientesApp.ViewModels
         {
             Actividad = new();
             Error = "";
+
+#if ANDROID
             if (actividadView == null)
                 actividadView = new() { BindingContext = this };
+#else
+            actividadView = new() { BindingContext = this };
+#endif
+
 
             await Application.Current.MainPage.Navigation.PushAsync(actividadView);
             Actualizar();
