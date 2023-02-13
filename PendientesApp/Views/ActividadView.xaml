@@ -4,10 +4,23 @@
              xmlns:vm="clr-namespace:PendientesApp.ViewModels"
              x:DataType="vm:PendientesViewModel"
              x:Class="PendientesApp.Views.ActividadView"
-             Title="ActividadView">
+             >
+
+    <ContentPage.Style>
+        <Style TargetType="ContentPage">
+            <Setter Property="Title" Value="Datos de la actividad"></Setter>
+            <Style.Triggers>
+                <DataTrigger TargetType="ContentPage" Binding="{Binding Actividad.Id}" Value="0">
+                    <Setter Property="Title" Value="Nueva Actividad"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </ContentPage.Style>
+    
+    
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Guardar" Clicked="ToolbarItem_Clicked"></ToolbarItem>
-        <ToolbarItem Order="Secondary" Text="Eliminar"></ToolbarItem>
+        <ToolbarItem Order="Secondary" Text="Eliminar" Command="{Binding EliminarCommand}"></ToolbarItem>
     </ContentPage.ToolbarItems>
     <Grid RowDefinitions="*,auto">
         <Editor x:Name="editor1" Margin="10" Text="{Binding Actividad.Descripcion}">

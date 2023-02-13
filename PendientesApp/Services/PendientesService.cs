@@ -56,5 +56,16 @@ namespace PendientesApp.Services
                 throw new Exception($"Ha ocurrido un error: {result.StatusCode}\n{s}");
             }
         }
+
+        public async Task Delete(Actividad a)
+        {       
+            var result = await client.DeleteAsync("api/pendientes/"+a.Id);
+            if (!result.IsSuccessStatusCode)
+            {
+                var json = await result.Content.ReadAsStringAsync();
+                string s = JsonConvert.DeserializeObject<string>(json);
+                throw new Exception($"Ha ocurrido un error: {result.StatusCode}\n{s}");
+            }
+        }
     }
 }

@@ -21,6 +21,8 @@ namespace PendientesApp.ViewModels
 
         public ICommand SeleccionarCommand { get; set; }
 
+        public ICommand EliminarCommand { get; set; }
+
         PendientesService pendientesService;
 
         public ObservableCollection<Actividad> Actividades { get; set; } = new();
@@ -37,10 +39,34 @@ namespace PendientesApp.ViewModels
             NuevoCommand = new Command(Nuevo);
             GuardarCommand = new Command(Guardar);
             SeleccionarCommand = new Command<Actividad>(Seleccionar);
+            EliminarCommand = new Command(Eliminar);
 
             Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
             pendientesService = new();
             _ = CargarDatos();
+        }
+
+        private async void Eliminar()
+        {
+            try
+            {
+                if (Actividad.Id != 0 && Connectivity.NetworkAccess == NetworkAccess.Internet)
+                {
+                    var opcion = await Application.Current.MainPage.DisplayAlert("ADVERTENCIA", "¿Esta seguro de eliminar la actividad?", "Sí", "No");
+                    if (opcion)
+                    {
+                        await pendientesService.Delete(Actividad);
+                        await Application.Current.MainPage.Navigation.PopAsync();
+                        await CargarDatos();
+
+                    }
+                }
+            }
+            catch(Exception m)
+            {
+                await Application.Current.MainPage.DisplayAlert("ADVERTENCIA", m.Message, "No");
+                await Application.Current.MainPage.Navigation.PopAsync();
+            }
         }
 
         private async void Seleccionar(Actividad actividad)
