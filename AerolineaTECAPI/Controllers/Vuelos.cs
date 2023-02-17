@@ -18,7 +18,8 @@ namespace AerolineaTECAPI.Controllers
 
         public IActionResult Get()
         {
-            return Ok(repository.Get());
+            return Ok(repository.Get().OrderBy(x=>x.Fecha).ThenBy(x=>x.Numerovuelo)
+                .Where(x=>x.Estado!=Estados.Cancelado||x.Estado!=Estados.Despegado||x.Estado!=Estados.Desviado||x.Estado!=Estados.Aterrizo));
         }
 
         [HttpPost]
@@ -31,6 +32,9 @@ namespace AerolineaTECAPI.Controllers
 
             if (Validar(vuelo, out List<string> errores))
             {
+                vuelo.Id = 0;
+                vuelo.UltimaEdicionFecha = DateTime.Now;
+                repository.Insert(vuelo);
                 return Ok();
             }
             else
