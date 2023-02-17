@@ -8,5 +8,6 @@ public static class Estados
     public static string Abordando { get; private set; } = "Abordando";
     public static string Despegado { get; private set; } = "Despegado";
     public static string ATiempo { get; private set; } = "A Tiempo";
+    public static string Aterrizo { get; private set; } = "Aterrizo";
 }
 
