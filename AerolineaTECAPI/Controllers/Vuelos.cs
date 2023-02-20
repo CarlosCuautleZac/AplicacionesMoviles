@@ -12,17 +12,88 @@ namespace AerolineaTECAPI.Controllers
         Repository<Vuelo> repository;
 
         public Vuelos(Sistem21AerolineadbContext context)
-        {      
+        {
             repository = new(context);
         }
 
         public IActionResult Get()
         {
-            return Ok(repository.Get().OrderBy(x=>x.Fecha).ThenBy(x=>x.Numerovuelo)
-                .Where(x=>x.Estado!=Estados.Cancelado||x.Estado!=Estados.Despegado||x.Estado!=Estados.Desviado||x.Estado!=Estados.Aterrizo));
+            return Ok(repository.Get().OrderBy(x => x.Fecha).ThenBy(x => x.Numerovuelo)
+                .Where(x => (x.Estado != Estados.Cancelado || x.Estado != Estados.EnVuelo || x.Estado != Estados.Desviado || x.Estado != Estados.Aterrizo)
+                &&
+                (x.UltimaEdicionFecha.AddMinutes(2) > DateTime.Now)));
         }
 
-        [HttpPost]
+        [HttpPut("Cancelar")]
+        public IActionResult CancelarVuelo(Vuelo vuelo)
+        {
+            Vuelo? v = repository.Get(vuelo.Id);
+
+            if (v == null)
+                return NotFound();
+
+            if (vuelo.Estado == Estados.Programado || vuelo.Estado == Estados.Retrasado || vuelo.Estado == Estados.Abordando || vuelo.Estado == Estados.ATiempo)
+            {
+                v.Estado = Estados.Cancelado;
+                v.UltimaEdicionFecha = DateTime.Now;
+                v.Puerta = 0;
+            }
+            else
+            {
+                return Conflict("El vuelo no puede ser cancelado porque su estado es: " + v.Estado);
+            }
+
+            repository.Update(vuelo);
+            return Ok();
+        }
+
+
+        [HttpPut("Desviar")]
+        public IActionResult Desviar(Vuelo vuelo)
+        {
+            var v = repository.Get(vuelo.Id);
+
+            if (v == null)
+                return NotFound();
+
+            if (v.Estado == Estados.EnVuelo)
+            {
+                v.Destino = vuelo.Destino;
+                v.UltimaEdicionFecha = DateTime.Now;
+                v.Estado = Estados.Desviado;
+                repository.Update(v);
+                return Ok();
+            }
+            else
+            {
+                return Conflict("El vuelo no puede ser desviado porque su estado es: " + vuelo.Estado);
+            }
+        }
+
+        [HttpPut("Despegar")]
+        public IActionResult Despegar(Vuelo vuelo)
+        {
+            var v = repository.Get(vuelo.Id);
+            if (v == null)
+                return NotFound();
+
+            if (v.Estado == Estados.Abordando)
+            {
+                vuelo.Estado = Estados.EnVuelo;
+                vuelo.Puerta = 0;
+                vuelo.UltimaEdicionFecha = DateTime.Now;
+                repository.Update(v);
+                return Ok();
+            }
+            else
+            {
+                return Conflict("El vuelo no puede modificarse porque su estado es: " + vuelo.Estado);
+            }
+
+
+        }
+
+
         public IActionResult Post(Vuelo vuelo)
         {
             if (vuelo == null)
@@ -39,7 +110,7 @@ namespace AerolineaTECAPI.Controllers
             }
             else
                 return BadRequest(errores);
-            
+
         }
 
         private bool Validar(Vuelo vuelo, out List<string> errors)
