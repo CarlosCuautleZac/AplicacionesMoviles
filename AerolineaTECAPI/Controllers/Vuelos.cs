@@ -93,6 +93,36 @@ namespace AerolineaTECAPI.Controllers
 
         }
 
+        [HttpPut("CambiarEstado")]
+        public IActionResult CambiarEstado(Vuelo v)
+        {
+            Vuelo? vuelo = repository.Get(v.Id);
+
+            if (vuelo == null)
+                return NotFound();
+
+            if ((vuelo.Estado == Estados.Programado && v.Estado == Estados.Retrasado)
+                || (vuelo.Estado == Estados.ATiempo && v.Estado == Estados.Retrasado)
+                || (vuelo.Estado == Estados.Programado && v.Estado == Estados.ATiempo))
+            {
+                vuelo.Puerta = v.Puerta;
+                vuelo.Estado = v.Estado;
+            }
+            else if (vuelo.Estado == Estados.EnVuelo && v.Estado == Estados.Aterrizo)
+            {
+                vuelo.Puerta = v.Puerta;
+                vuelo.Estado = Estados.Aterrizo;
+            }
+            else
+                return BadRequest($"El estado del vuelo no puede ser cambiado a " +
+                    $"{v.Estado} porque el estado actual es: {vuelo.Estado}");
+
+            vuelo.UltimaEdicionFecha = DateTime.Now;
+            repository.Update(vuelo);
+            return Ok();
+        }
+
+
 
         public IActionResult Post(Vuelo vuelo)
         {
