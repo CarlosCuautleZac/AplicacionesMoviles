@@ -100,6 +100,7 @@ namespace AerolineaTECAPI.Controllers
 
             if (vuelo == null)
                 return NotFound();
+             
 
             if ((vuelo.Estado == Estados.Programado && v.Estado == Estados.Retrasado)
                 || (vuelo.Estado == Estados.ATiempo && v.Estado == Estados.Retrasado)
