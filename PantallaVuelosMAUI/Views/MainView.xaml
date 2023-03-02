@@ -38,7 +38,7 @@
 
 
         <ScrollView Grid.Row="1">
-            <CollectionView ItemsSource="{Binding AerolineaList}">
+            <CollectionView>
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Vertical"></LinearItemsLayout>
                 </CollectionView.ItemsLayout>
