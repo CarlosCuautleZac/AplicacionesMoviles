@@ -13,6 +13,8 @@ namespace PantallaVuelosMAUI
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    fonts.AddFont("Carlosfont-Regular", "CarlosFont");
+                    fonts.AddFont("NeoSansStd-MediumItalic", "NeoSansStd");
                 });
 
 #if DEBUG
