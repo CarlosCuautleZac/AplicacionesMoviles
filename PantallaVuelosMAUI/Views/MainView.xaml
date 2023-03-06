@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PantallaVuelosMAUI.Views.MainView"
-             Title="MainView">
+             Title="MainView" Shell.NavBarIsVisible="False">
 
     <Grid Background="#FF1F1F1F">
         <Grid.RowDefinitions>

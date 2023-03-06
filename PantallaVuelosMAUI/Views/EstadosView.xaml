@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PantallaVuelosMAUI.Views.EstadosView"
+             Title="Cambiar de estado">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Editar"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+    <VerticalStackLayout>
+        <Label  Text="Número de vuelo:"></Label>
+        <Entry IsReadOnly="False"></Entry>
+
+        <Label Text="Destino:"></Label>
+        <Entry IsEnabled="False"></Entry>
+
+        <Label Text="Fecha de salida:"></Label>
+        <Entry IsEnabled="False"></Entry>
+
+
+        <Label Text="Número de puerta:"></Label>
+        <Entry Keyboard="Numeric" IsEnabled="False"></Entry>
+
+        <Label Text="Text:"></Label>
+
+        <Picker IsEnabled="False"></Picker>
+
+        <Label Margin="10" FontSize="Small" TextColor="Red" HorizontalTextAlignment="Center"></Label>
+    </VerticalStackLayout>
+</ContentPage>

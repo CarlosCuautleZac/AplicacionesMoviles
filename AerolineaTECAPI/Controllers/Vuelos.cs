@@ -16,6 +16,7 @@ namespace AerolineaTECAPI.Controllers
             repository = new(context);
         }
 
+
         public IActionResult Get()
         {
             return Ok(repository.Get().OrderBy(x => x.Fecha).ThenBy(x => x.Numerovuelo)

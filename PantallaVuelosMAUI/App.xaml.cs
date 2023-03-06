@@ -8,7 +8,10 @@ namespace PantallaVuelosMAUI
         {
             InitializeComponent();
 
-            MainPage = new MainView();
+            Routing.RegisterRoute("estado", typeof(Views.EstadosView));
+
+
+            MainPage = new AppShell();
         }
     }
 }
