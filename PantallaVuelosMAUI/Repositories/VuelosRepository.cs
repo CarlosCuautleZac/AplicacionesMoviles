@@ -25,7 +25,7 @@ namespace PantallaVuelosMAUI.Repositories
 
         public List<Vuelo> Get(int id)
         {
-            return new List<Vuelo>();
+            return new List<Vuelo>(id);
         }
 
         public void Insert(Vuelo v)
