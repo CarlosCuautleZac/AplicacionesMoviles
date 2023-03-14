@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PantallaVuelosMAUI.Repositories
 {
-    public class VuelosRepository
+    public class VuelosRepository<T> where T : new()
     {
         SQLiteConnection context;
 
@@ -16,26 +16,27 @@ namespace PantallaVuelosMAUI.Repositories
         {
             context = new SQLiteConnection(Helpers.DatabaseHelper.RutaBD);
             context.CreateTable<Vuelo>();
+            context.CreateTable<VueloBuffer>();
         }
 
-        public List<Vuelo> GetAll()
+        public TableQuery<T> GetAll()
         {
-            return new List<Vuelo>();
+            return context.Table<T>();
         }
 
-        public List<Vuelo> Get(int id)
+        public T Get(int id)
         {
-            return new List<Vuelo>(id);
+            return context.Get<T>(id);
         }
 
-        public void Insert(Vuelo v)
+        public void Insert(T t)
         {
-            context.Insert(v);
+            context.Insert(t);
         }
 
-        public void Update(Vuelo v)
+        public void Update(T t)
         {
-            context.Update(v);
+            context.Update(t);
         }
 
         public void Delete(int id)

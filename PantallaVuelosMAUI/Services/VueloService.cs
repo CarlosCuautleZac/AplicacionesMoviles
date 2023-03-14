@@ -14,7 +14,10 @@ namespace PantallaVuelosMAUI.Services
     public class VueloService
     {
         HttpClient client;
-        VuelosRepository repository = new VuelosRepository();
+        VuelosRepository<Vuelo> repository = new();
+        VuelosRepository<VueloBuffer> bufferRepository = new();
+
+        public string Errores { get; private set; }
 
         //Sincronizador de microservicios
         public VueloService()
@@ -55,6 +58,113 @@ namespace PantallaVuelosMAUI.Services
             }
 
             return repository.GetAll();
+
+        }
+
+        public async Task<bool> Post(Vuelo v)
+        {
+            if(Connectivity.Current.NetworkAccess == NetworkAccess.Internet)
+            {
+                var json = JsonConvert.SerializeObject(v);
+                var response = await client.PostAsync("api/vuelos", new StringContent(json,
+                    Encoding.UTF8, "application/json") );
+
+                if (response.IsSuccessStatusCode)
+                    return true;
+                else
+                {
+                    Errores = await response.Content.ReadAsStringAsync();
+                    return false;
+                }
+            }
+            else
+            {
+                VueloBuffer vb = new VueloBuffer()
+                {
+                    Destino = v.Destino,
+                    Estado = v.Estado,
+                    Fecha = v.Fecha,
+                    Numerovuelo= v.Numerovuelo,
+                    Puerta= v.Puerta,
+                    Status  = State.Agregado
+                };
+
+                bufferRepository.Insert(vb);
+                return false;
+            }
+
+
+
+        }
+
+        public async Task<bool> PutaAsync(Vuelo v)
+        {
+            if (Connectivity.Current.NetworkAccess == NetworkAccess.Internet)
+            {
+                var json = JsonConvert.SerializeObject(v);
+                var response = await client.PutAsync("api/vuelos", new StringContent(json,
+                    Encoding.UTF8, "application/json"));
+
+                if (response.IsSuccessStatusCode)
+                    return true;
+                else
+                {
+                    Errores = await response.Content.ReadAsStringAsync();
+                    return false;
+                }
+            }
+            else
+            {
+                VueloBuffer vb = new VueloBuffer()
+                {
+                    Destino = v.Destino,
+                    Estado = v.Estado,
+                    Fecha = v.Fecha,
+                    Numerovuelo = v.Numerovuelo,
+                    Puerta = v.Puerta,
+                    Status = State.Modificafo
+                };
+
+                bufferRepository.Insert(vb);
+                return false;
+            }
+
+
+
+        }
+
+        public async Task<bool> DeleteAsync(Vuelo v)
+        {
+            if (Connectivity.Current.NetworkAccess == NetworkAccess.Internet)
+            {
+                var response = await client.DeleteAsync("api/vuelos/"+v.Id);
+
+                if (response.IsSuccessStatusCode)
+                    return true;
+                else
+                {
+                    Errores = await response.Content.ReadAsStringAsync();
+                    return false;
+                }
+            }
+            else
+            {
+
+                VueloBuffer vb = new VueloBuffer()
+                {
+                    Destino = v.Destino,
+                    Estado = v.Estado,
+                    Fecha = v.Fecha,
+                    Numerovuelo = v.Numerovuelo,
+                    Puerta = v.Puerta,
+                    Status = State.Modificafo
+                };
+
+                bufferRepository.Insert(vb);
+                return false;
+            }
+
+
 
         }
     }
