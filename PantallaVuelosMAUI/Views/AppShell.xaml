@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:vm="clr-namespace:PantallaVuelosMAUI.ViewModels"
              xmlns:views="clr-namespace:PantallaVuelosMAUI.Views"
              x:Class="PantallaVuelosMAUI.Views.AppShell"
        
              Title="AppShell" >
 
+    <!--<Shell.BindingContext>
+        <vm:VuelosViewModel></vm:VuelosViewModel>
+    </Shell.BindingContext>-->
 
-    <FlyoutItem Title="Principal">
+            <FlyoutItem Title="Principal">
 
-        <ShellContent Route="principal">
-            <views:MainView></views:MainView>
-        </ShellContent>
-
-
-    </FlyoutItem>
+                <ShellContent Route="principal">
+                    <views:MainView></views:MainView>
+                </ShellContent>
 
 
-    <FlyoutItem Title="NuevoVuelo">
-        <ShellContent  Route="nuevo">
-            <views:NuevoVuelo></views:NuevoVuelo>
-        </ShellContent>
-    </FlyoutItem>
+            </FlyoutItem>
+
+
+            <FlyoutItem Title="NuevoVuelo">
+                <ShellContent  Route="nuevo">
+                    <views:NuevoVuelo></views:NuevoVuelo>
+                </ShellContent>
+            </FlyoutItem>
 </Shell>
