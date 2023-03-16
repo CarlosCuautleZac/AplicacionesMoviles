@@ -13,7 +13,7 @@ namespace PantallaVuelosMAUI.ViewModels
 {
     public class VuelosViewModel : INotifyPropertyChanged
     {
-        public ObservableCollection<Vuelo> Vuelos { get; set; }
+        public ObservableCollection<Vuelo> Vuelos { get; set; } = new();
         public Vuelo Vuelo { get; set; }
 
         VuelosRepository<VueloBuffer> bufferRepository = new();

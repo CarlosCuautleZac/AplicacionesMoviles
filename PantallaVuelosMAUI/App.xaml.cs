@@ -1,9 +1,12 @@
-﻿using PantallaVuelosMAUI.Views;
+﻿using PantallaVuelosMAUI.ViewModels;
+using PantallaVuelosMAUI.Views;
 
 namespace PantallaVuelosMAUI
 {
     public partial class App : Application
     {
+
+
         public App()
         {
             InitializeComponent();

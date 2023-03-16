@@ -13,7 +13,7 @@ namespace PantallaVuelosMAUI.Services
 {
     public class VueloService
     {
-        HttpClient client;
+        HttpClient client = new();
         VuelosRepository<Vuelo> repository = new();
         VuelosRepository<VueloBuffer> bufferRepository = new();
 

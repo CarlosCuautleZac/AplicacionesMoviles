@@ -26,7 +26,7 @@ namespace PantallaVuelosMAUI.Repositories
 
         public T Get(int id)
         {
-            return context.Get<T>(id);
+            return context.Find<T>(id);
         }
 
         public void Insert(T t)
