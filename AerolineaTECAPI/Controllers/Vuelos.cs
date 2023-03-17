@@ -136,6 +136,7 @@ namespace AerolineaTECAPI.Controllers
             if (Validar(vuelo, out List<string> errores))
             {
                 vuelo.Id = 0;
+                vuelo.Estado = Estados.Programado;
                 vuelo.UltimaEdicionFecha = DateTime.Now;
                 repository.Insert(vuelo);
                 return Ok();

@@ -4,7 +4,7 @@
              x:Class="PantallaVuelosMAUI.Views.MainView"
              xmlns:m="clr-namespace:PantallaVuelosMAUI.Models"
              xmlns:vm="clr-namespace:PantallaVuelosMAUI.ViewModels"
-             Title="MainView" Shell.NavBarIsVisible="False" x:DataType="vm:VuelosViewModel">
+             Title="MainView"  x:DataType="vm:VuelosViewModel">
 
     <Grid Background="#FF1F1F1F">
         <Grid.RowDefinitions>

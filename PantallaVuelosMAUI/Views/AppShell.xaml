@@ -10,17 +10,16 @@
         <vm:VuelosViewModel x:Name="vuelosVM"></vm:VuelosViewModel>
     </Shell.BindingContext>
 
-            <FlyoutItem Title="Principal">
+    <FlyoutItem Title="Principal">
 
-                <ShellContent Route="principal">
-                    <views:MainView></views:MainView>
-                </ShellContent>
-
-
-            </FlyoutItem>
+        <ShellContent Route="principal">
+            <views:MainView></views:MainView>
+        </ShellContent>
 
 
-            <FlyoutItem Title="NuevoVuelo">
+    </FlyoutItem>
+    
+    <FlyoutItem Title="NuevoVuelo">
                 <ShellContent  Route="nuevo">
                     <views:NuevoVuelo></views:NuevoVuelo>
                 </ShellContent>
