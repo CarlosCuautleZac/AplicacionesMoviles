@@ -39,6 +39,7 @@ namespace PantallaVuelosMAUI.ViewModels
         {
             //Validar
 
+          
             var seagrego = await service.Post(Vuelo);
 
             if (seagrego)

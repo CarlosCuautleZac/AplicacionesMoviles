@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿using Newtonsoft.Json;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,28 @@ namespace PantallaVuelosMAUI.Models
         public string Estado { get; set; } = "";
 
         public DateTime Fecha { get; set; } = DateTime.Now;
+
+        [JsonIgnore, Ignore]
+        public DateTime Date
+        {
+            get { return Fecha.Date; }
+
+            set 
+            { 
+                Fecha = new DateTime(value.Year,value.Month,value.Day,Fecha.Hour, Fecha.Minute,Fecha.Second);
+            }
+        }
+
+        [JsonIgnore, Ignore]
+        public TimeSpan Hour
+        {
+            get { return new TimeSpan(Fecha.Hour, Fecha.Minute, Fecha.Second); }
+
+            set
+            {
+                Fecha = new DateTime(Fecha.Year, Fecha.Month, Fecha.Day, value.Hours, value.Minutes, value.Seconds);
+            }
+        }
 
         public DateTime UltimaEdicionFecha { get; set; }  
 

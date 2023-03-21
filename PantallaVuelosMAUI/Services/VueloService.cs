@@ -3,6 +3,7 @@ using PantallaVuelosMAUI.Models;
 using PantallaVuelosMAUI.Repositories;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -13,9 +14,12 @@ namespace PantallaVuelosMAUI.Services
 {
     public class VueloService
     {
+        public event Action<IEnumerable<Vuelo>> VuelosActualizados;
+
         HttpClient client = new();
         VuelosRepository<Vuelo> repository = new();
         VuelosRepository<VueloBuffer> bufferRepository = new();
+        Thread Sincronizador;
 
         public string Errores { get; private set; }
 
@@ -23,6 +27,53 @@ namespace PantallaVuelosMAUI.Services
         public VueloService()
         {
             client.BaseAddress = new Uri("https://aerolineatec.sistemas19.com/");
+            Sincronizador = new Thread(new ThreadStart(Sincronizar));
+            Sincronizador.IsBackground = true;
+            Sincronizador.Start();
+        }
+
+        private async void Sincronizar()
+        {
+
+            while (true)
+            {
+                Thread.Sleep(30000); //Dormirlo 
+                if (Connectivity.Current.NetworkAccess == NetworkAccess.Internet)
+                {
+                    //Descargar de la api
+                    var response = await client.GetAsync("api/vuelos");
+                    response.EnsureSuccessStatusCode();
+                    var json = await response.Content.ReadAsStringAsync();
+                    var vuelos = JsonConvert.DeserializeObject<List<Vuelo>>(json);
+                    bool actualizado = false;
+
+
+                    //Actualizacion en la BD local
+                    foreach (var item in vuelos)
+                    {
+                        var vuelo = repository.Get(item.Id);
+                        if (vuelo == null)
+                        {
+                            repository.Insert(item);
+                             actualizado = true;
+                        }
+                        else
+                        {
+                            repository.Update(item);
+                            actualizado = true;
+                        }
+                    }
+
+                    foreach (var item in repository.GetAll())
+                    {
+                        if (!vuelos.Any(x => x.Id == item.Id))
+                        {
+                            repository.Delete(item.Id);
+                            actualizado = true;
+                        }
+                    }
+                }
+            }
         }
 
         public async Task<IEnumerable<Vuelo>> GetAsync()
@@ -34,7 +85,7 @@ namespace PantallaVuelosMAUI.Services
                 response.EnsureSuccessStatusCode();
                 var json = await response.Content.ReadAsStringAsync();
                 var vuelos = JsonConvert.DeserializeObject<List<Vuelo>>(json);
-                
+
 
                 //Actualizacion en la BD local
                 foreach (var item in vuelos)
@@ -63,11 +114,11 @@ namespace PantallaVuelosMAUI.Services
 
         public async Task<bool> Post(Vuelo v)
         {
-            if(Connectivity.Current.NetworkAccess == NetworkAccess.Internet)
+            if (Connectivity.Current.NetworkAccess == NetworkAccess.Internet)
             {
                 var json = JsonConvert.SerializeObject(v);
                 var response = await client.PostAsync("api/vuelos", new StringContent(json,
-                    Encoding.UTF8, "application/json") );
+                    Encoding.UTF8, "application/json"));
 
                 if (response.IsSuccessStatusCode)
                     return true;
@@ -84,9 +135,9 @@ namespace PantallaVuelosMAUI.Services
                     Destino = v.Destino,
                     Estado = v.Estado,
                     Fecha = v.Fecha,
-                    Numerovuelo= v.Numerovuelo,
-                    Puerta= v.Puerta,
-                    Status  = State.Agregado
+                    Numerovuelo = v.Numerovuelo,
+                    Puerta = v.Puerta,
+                    Status = State.Agregado
                 };
 
                 bufferRepository.Insert(vb);
