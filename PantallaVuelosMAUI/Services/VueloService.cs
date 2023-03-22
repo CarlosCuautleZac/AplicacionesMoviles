@@ -113,7 +113,9 @@ namespace PantallaVuelosMAUI.Services
                 }
             }
 
-            return repository.GetAll();
+            var v = repository.GetAll().ToList();
+
+            return v;
 
         }
 
