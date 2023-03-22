@@ -14,7 +14,7 @@ namespace PantallaVuelosMAUI.Services
 {
     public class VueloService
     {
-        public event Action<IEnumerable<Vuelo>> VuelosActualizados;
+        public event Action<List<Vuelo>> VuelosActualizados;
 
         HttpClient client = new();
         VuelosRepository<Vuelo> repository = new();
@@ -71,6 +71,11 @@ namespace PantallaVuelosMAUI.Services
                             repository.Delete(item.Id);
                             actualizado = true;
                         }
+                    }
+
+                    if (actualizado)
+                    {
+                        VuelosActualizados?.Invoke(repository.GetAll().ToList());
                     }
                 }
             }

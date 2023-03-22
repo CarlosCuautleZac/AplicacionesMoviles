@@ -24,6 +24,7 @@ namespace PantallaVuelosMAUI.ViewModels
 
 
 
+
         //Objetos
         VueloService service;
 
@@ -33,13 +34,53 @@ namespace PantallaVuelosMAUI.ViewModels
 
             service = new();
             Llenar();
+
+            service.VuelosActualizados += Service_VuelosActualizados;
+
+
+        }
+
+        private void Service_VuelosActualizados(List<Vuelo> nuevos)
+        {
+
+
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+              
+
+                for (int i = 0; i < nuevos.Count; i++)
+                {
+                    var nuevo = nuevos[i];
+                    var anterior = Vuelos.FirstOrDefault(x => x.Id == nuevo.Id);
+
+                    if (anterior == null)
+                    {
+                        Vuelos.Add(nuevo);
+                    }
+                    else if (nuevo.UltimaEdicionFecha != anterior.UltimaEdicionFecha)
+                    {
+                        Vuelos[Vuelos.IndexOf(anterior)] = nuevo;
+                    }
+
+                    var paraborrar = Vuelos.Where(x => !nuevos.Any(y => x.Id == y.Id));
+
+                    foreach (var item in paraborrar)
+                    {
+                        Vuelos.Remove(item);
+                    }
+
+                }
+
+
+            });
+
         }
 
         private async void Agregar()
         {
             //Validar
 
-          
+
             var seagrego = await service.Post(Vuelo);
 
             if (seagrego)
