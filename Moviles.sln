@@ -17,6 +17,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AerolineaTECAPI", "Aeroline
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PantallaVuelosMAUI", "PantallaVuelosMAUI\PantallaVuelosMAUI.csproj", "{9F74F262-2BBF-4CD1-9DB0-4532D1C0CE6F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unidad 2", "Unidad 2", "{BF98D67F-A19F-4DB3-8801-5EA66D32CD78}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PruebaSignalR", "PruebaSignalR\PruebaSignalR.csproj", "{C0EC203A-812A-4410-8F1A-9D299F56BCFA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +53,10 @@ Global
 		{9F74F262-2BBF-4CD1-9DB0-4532D1C0CE6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F74F262-2BBF-4CD1-9DB0-4532D1C0CE6F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9F74F262-2BBF-4CD1-9DB0-4532D1C0CE6F}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{C0EC203A-812A-4410-8F1A-9D299F56BCFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0EC203A-812A-4410-8F1A-9D299F56BCFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0EC203A-812A-4410-8F1A-9D299F56BCFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0EC203A-812A-4410-8F1A-9D299F56BCFA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -59,6 +67,7 @@ Global
 		{03A2FF2E-59DA-4763-8696-783550105E52} = {7FC2E3F5-B7C8-457A-B194-4DE03199111F}
 		{D1030970-C6DE-4EF0-8F6E-22F33040CE52} = {B1128605-748A-4FD9-8C44-D45486B9FF31}
 		{9F74F262-2BBF-4CD1-9DB0-4532D1C0CE6F} = {B1128605-748A-4FD9-8C44-D45486B9FF31}
+		{C0EC203A-812A-4410-8F1A-9D299F56BCFA} = {BF98D67F-A19F-4DB3-8801-5EA66D32CD78}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
