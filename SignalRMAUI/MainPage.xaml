@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SignalRMAUI.MainPage" Loaded="ContentPage_Loaded">
+
+    <VerticalStackLayout>
+        <Label x:Name="lblValor" Text="0" HorizontalOptions="Center" FontSize="Header"></Label>
+
+        <HorizontalStackLayout HorizontalOptions="Center">
+            <Button Text="Incrementar" Clicked="btnIncrementar_Clicked" x:Name="btnIncrementar"></Button>
+            <Button Text="Decrementar" Clicked="btnDecrementar_Clicked" x:Name="btnDecrementar"></Button>
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>

@@ -18,16 +18,16 @@ namespace PruebaSignalR.Controllers
         }
 
         [HttpGet("Incrementar")]
-        public IActionResult Incrementar()
+        public async Task<IActionResult> Incrementar()
         {
-            numerosHub.Clients.All.SendAsync("Incrementar");
+            await numerosHub.Clients.All.SendAsync("Incrementar");
             return Ok();
         }
 
         [HttpGet("Decrementar")]
-        public IActionResult Decrementar()
+        public async Task<IActionResult> Decrementar()
         {
-            numerosHub.Clients.All.SendAsync("Decrementar");
+            await numerosHub.Clients.All.SendAsync("Decrementar");
             return Ok();
         }
     }
