@@ -20,5 +20,7 @@ namespace RifasAPI.Repostitories
         {
             return context.Boletos.Find(id);
         }
+
+
     }
 }
