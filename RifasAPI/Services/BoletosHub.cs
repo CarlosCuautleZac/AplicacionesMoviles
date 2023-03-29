@@ -1,6 +1,9 @@
-﻿namespace RifasAPI.Services
+﻿using Microsoft.AspNetCore.SignalR;
+
+namespace RifasAPI.Services
 {
-    public class BoletosHub
+    public class BoletosHub : Hub
     {
+
     }
 }
