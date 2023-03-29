@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using RifasAPI.Models;
+using RifasAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
@@ -12,6 +13,6 @@ builder.Services.AddDbContext<Sistem21RifasContext>(optionsBuilder
 
 
 var app = builder.Build();
-
+app.MapHub<BoletosHub>("/boletosHub");
 app.MapControllers();
 app.Run();
