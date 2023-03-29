@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using RifasAPI.Models;
 using RifasAPI.Repostitories;
 using RifasAPI.Services;
@@ -21,9 +22,31 @@ namespace RifasAPI.Controllers
             boletosRepository = new BoletosRepository(context);
         }
 
+        [HttpGet("vendidos")]
         public IActionResult Get()
         {
             return Ok(boletosRepository.GetAll());
+        }
+
+
+        [HttpPost("vender")]
+        public async Task<IActionResult> Post(Boletos boleto)
+        {
+            if(boletosRepository.Validate(boleto, out List<string> errores))
+            {
+                boleto.Id= 0;
+                boleto.FechaModificacion = DateTime.Now;//Va a causar problemas
+                boleto.Eliminado = 0;
+                boletosRepository.Insert(boleto);
+
+                await hubContext.Clients.All.SendAsync("agregar", boleto);
+
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(errores);
+            }
         }
     }
 }
