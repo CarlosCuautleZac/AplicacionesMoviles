@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RifasAPI.Models;
+using RifasAPI.Repostitories;
 using RifasAPI.Services;
 
 namespace RifasAPI.Controllers
@@ -8,9 +10,20 @@ namespace RifasAPI.Controllers
     [ApiController]
     public class RifaController : ControllerBase
     {
-        public RifaController(BoletosHub hub)
+        private readonly Sistem21RifasContext context;
+        private readonly BoletosHub hubContext;
+        BoletosRepository boletosRepository;
+
+        public RifaController(Sistem21RifasContext context, BoletosHub hubContext)
         {
-            
+            this.context = context;
+            this.hubContext = hubContext;
+            boletosRepository = new BoletosRepository(context);
+        }
+
+        public IActionResult Get()
+        {
+            return Ok(boletosRepository.GetAll());
         }
     }
 }
