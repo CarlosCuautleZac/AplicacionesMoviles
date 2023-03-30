@@ -16,6 +16,11 @@ namespace RifasAPI.Repostitories
             return context.Boletos.OrderBy(x => x.NumeroBoleto).Where(x => x.Eliminado == 0);
         }
 
+        public IEnumerable<Boletos> GetAllByFecha(DateTime fecha)
+        {
+            return context.Boletos.OrderBy(x => x.NumeroBoleto).Where(x => x.FechaModificacion>fecha);
+        }
+
         public Boletos? GetById(int id)
         {
             return context.Boletos.Find(id);
