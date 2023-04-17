@@ -23,15 +23,21 @@ namespace RifasMAUIApp.Services
         {
             var response = await client.GetAsync("api/rifas/vendidos");
             response.EnsureSuccessStatusCode();//Verificar que regreso un 200
-
             var json = await response.Content.ReadAsStringAsync();
             var datos = JsonConvert.DeserializeObject<IEnumerable<BoletoDTO>>(json);
             return datos;
 
         }
 
-        public void Post()
+        public void Post(BoletoDTO boleto)
         {
+            //Validar
+            //Se supone que se tiene que validar en todo, nosotros menjamos el modelo de 3 capas
+            //Interfaz
+            //Logica de negocios
+            //Modelo de Datos
+
+
 
         }
 
