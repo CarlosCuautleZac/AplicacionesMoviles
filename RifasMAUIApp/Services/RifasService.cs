@@ -29,7 +29,7 @@ namespace RifasMAUIApp.Services
 
         }
 
-        public void Post(BoletoDTO boleto)
+        public async void Post(BoletoDTO boleto)
         {
             //Validar
             //Se supone que se tiene que validar en todo, nosotros menjamos el modelo de 3 capas
@@ -37,19 +37,27 @@ namespace RifasMAUIApp.Services
             //Logica de negocios
             //Modelo de Datos
 
-
-
+           await Send("api/rifas/pagar", boleto, HttpMethod.Post);
         }
 
-        public void Put()
+        async Task Send(string url, object dto, HttpMethod method)
         {
+            var json = JsonConvert.SerializeObject(dto);
+            HttpRequestMessage httpRequestMessagerequest = new HttpRequestMessage(method, url);
+            httpRequestMessagerequest.Content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await client.SendAsync(httpRequestMessagerequest);
+            response.EnsureSuccessStatusCode();
+        }
 
+        public async void Put(BoletoDTO boleto)
+        {
+            await Send("api/rifas/vender", boleto, HttpMethod.Post);
         }
 
         //Se tiene que cancelar
-        public void Delete()
+        public async void Delete(BoletoDTO boleto)
         {
-
+            await Send("api/rifas/cancelar", boleto, HttpMethod.Put);
         }
     }
 }

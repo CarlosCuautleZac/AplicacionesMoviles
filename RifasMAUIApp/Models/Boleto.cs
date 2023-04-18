@@ -23,7 +23,5 @@ namespace RifasMAUIApp.Models
 
         public ulong Pagado { get; set; }
 
-
-
     }
 }
