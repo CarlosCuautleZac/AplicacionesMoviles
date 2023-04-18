@@ -54,6 +54,23 @@ namespace RifasMAUIApp.ViewModels
                 }
 
 
+                //Pruebas
+                //foreach (var v in vendidos)
+                //{
+                //    var posicion = v.NumeroBoleto;
+
+                //    Boleto BoletoLista = new()
+                //    {
+                //        Id = v.Id,
+                //        NombrePersona = v.NombrePersona,
+                //        NumeroBoleto = v.NumeroBoleto,
+                //        NumeroTelefono = v.NumeroTelefono,
+                //        Pagado = v.Pagado
+                //    };
+
+                //    Boletos[(int)posicion] = BoletoLista;
+                //}
+
 
                 Actualizar();
             }
