@@ -21,7 +21,7 @@ namespace RifasMAUIApp.Models
 
         public string NumeroTelefono { get; set; } = null!;
 
-        public ulong Pagado { get; set; }
+        public bool Pagado { get; set; }
 
     }
 }

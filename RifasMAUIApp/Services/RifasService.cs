@@ -12,7 +12,7 @@ namespace RifasMAUIApp.Services
 {
     public class RifasService
     {
-        HttpClient client;
+        HttpClient client = new();
 
         public RifasService()
         {
@@ -21,7 +21,7 @@ namespace RifasMAUIApp.Services
 
         public async Task<IEnumerable<BoletoDTO>> GetAll()
         {
-            var response = await client.GetAsync("api/rifas/vendidos");
+            var response = await client.GetAsync("api/rifa/vendidos");
             response.EnsureSuccessStatusCode();//Verificar que regreso un 200
             var json = await response.Content.ReadAsStringAsync();
             var datos = JsonConvert.DeserializeObject<IEnumerable<BoletoDTO>>(json);

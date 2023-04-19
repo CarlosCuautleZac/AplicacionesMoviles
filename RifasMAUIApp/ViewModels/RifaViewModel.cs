@@ -54,7 +54,7 @@ namespace RifasMAUIApp.ViewModels
                 }
 
 
-                //Pruebas
+                ////Pruebas
                 //foreach (var v in vendidos)
                 //{
                 //    var posicion = v.NumeroBoleto;
@@ -70,6 +70,22 @@ namespace RifasMAUIApp.ViewModels
 
                 //    Boletos[(int)posicion] = BoletoLista;
                 //}
+
+
+                foreach (var boletovendido in vendidos)
+                {
+                    Boleto bvendido = new()
+                    {
+                        Id = boletovendido.Id,
+                        NombrePersona = boletovendido.NombrePersona,
+                        NumeroBoleto = boletovendido.NumeroBoleto,
+                        NumeroTelefono = boletovendido.NumeroTelefono,
+                        Pagado = boletovendido.Pagado==1
+                    };
+
+                    Boletos[(int)bvendido.NumeroBoleto-1] = bvendido;
+
+                }
 
 
                 Actualizar();
