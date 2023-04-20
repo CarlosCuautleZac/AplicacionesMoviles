@@ -8,7 +8,9 @@ namespace RifasMAUIApp
         {
             InitializeComponent();
 
-            MainPage = new Main();
+            Routing.RegisterRoute("//Agregar", typeof(VenderBoletoView));
+
+            MainPage = new AppShell();
         }
     }
 }

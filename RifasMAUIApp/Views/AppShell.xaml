@@ -4,11 +4,13 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:RifasMAUIApp"
-    Shell.FlyoutBehavior="Disabled">
+    xmlns:views="clr-namespace:RifasMAUIApp.Views"
+    Shell.FlyoutBehavior="Disabled" Shell.NavBarIsVisible="False">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <ShellContent Route="Main">
+        <views:Main></views:Main>
+    </ShellContent>
+    
+    
 
 </Shell>

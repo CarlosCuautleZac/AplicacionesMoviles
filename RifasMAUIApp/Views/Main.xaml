@@ -6,7 +6,7 @@
              Title="Main">
 
     <ContentPage.BindingContext>
-        <vm:RifaViewModel></vm:RifaViewModel>
+        <vm:RifaViewModel x:Name="rifavm"></vm:RifaViewModel>
     </ContentPage.BindingContext>
 
     <Frame Margin="15" BorderColor="Black" CornerRadius="0">
@@ -24,22 +24,24 @@
 
             <ScrollView Grid.Row="1">
 
-                <CollectionView ItemsSource="{Binding Boletos}" Margin="0">
-
-                    <CollectionView.ItemsLayout>
-                        <LinearItemsLayout ItemSpacing="0" Orientation="Vertical"></LinearItemsLayout>
-                    </CollectionView.ItemsLayout>
-                    <CollectionView.ItemTemplate>
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Boletos}" Margin="0">
+                   
+                    <BindableLayout.ItemTemplate>
                         <DataTemplate>
                             <Grid BackgroundColor="Black" ColumnDefinitions="50,.7*,.3*,80">
                                 <Label HorizontalTextAlignment="Center" Background="white" Margin="1" Text="{Binding NumeroBoleto}"></Label>
-                                <Label HorizontalTextAlignment="Center" Background="white" Margin="1" Grid.Column="1" Text="{Binding NombrePersona}"></Label>
+                                <Label HorizontalTextAlignment="Center" Background="white" Margin="1" Grid.Column="1" Text="{Binding NombrePersona}">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={x:Reference rifavm}, Path=NuevaVentaCommand}"
+                                                              CommandParameter="{Binding .}"></TapGestureRecognizer>
+                                    </Label.GestureRecognizers>
+                                </Label>
                                 <Label HorizontalTextAlignment="Center" Background="white" Margin="1" Grid.Column="2" Text="{Binding NumeroTelefono}"></Label>
                                 <Label HorizontalTextAlignment="Center" Background="white" Margin="1" Grid.Column="3" Text="{Binding Pagado}"></Label>
                             </Grid>
                         </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
                
             </ScrollView>
         </Grid>

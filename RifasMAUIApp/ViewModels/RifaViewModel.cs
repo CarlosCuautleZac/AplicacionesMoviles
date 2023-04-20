@@ -31,8 +31,27 @@ namespace RifasMAUIApp.ViewModels
         RifasService service;
         public RifaViewModel()
         {
+            NuevaVentaCommand = new Command<Boleto>(NuevaVenta);
+            VenderCommand = new Command(Vender);
             service = new();
             DescargarBoletos();
+        }
+
+        private void Vender(object obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        private async void NuevaVenta(Boleto boleto)
+        {
+            if (boleto.Id == 0)
+            {
+                Boleto = boleto;
+                Actualizar();
+                await Shell.Current.GoToAsync("//Agregar");
+            }
+            
+
         }
 
         private async void DescargarBoletos()
