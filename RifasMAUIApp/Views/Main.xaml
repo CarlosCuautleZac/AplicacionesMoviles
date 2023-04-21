@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:RifasMAUIApp.ViewModels"
+             xmlns:vm ="clr-namespace:RifasMAUIApp.ViewModels" x:DataType="vm:RifaViewModel"
+             x:Name="mainView"
+             xmlns:m="clr-namespace:RifasMAUIApp.Models"
              x:Class="RifasMAUIApp.Views.Main" Background="gray"
              Title="Main">
 
-    <ContentPage.BindingContext>
+    <!--<ContentPage.BindingContext>
         <vm:RifaViewModel x:Name="rifavm"></vm:RifaViewModel>
-    </ContentPage.BindingContext>
+    </ContentPage.BindingContext>-->
 
     <Frame Margin="15" BorderColor="Black" CornerRadius="0">
         <Grid RowDefinitions="auto,*" BackgroundColor="White">
@@ -27,12 +29,13 @@
                 <VerticalStackLayout BindableLayout.ItemsSource="{Binding Boletos}" Margin="0">
                    
                     <BindableLayout.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="m:Boleto">
                             <Grid BackgroundColor="Black" ColumnDefinitions="50,.7*,.3*,80">
                                 <Label HorizontalTextAlignment="Center" Background="white" Margin="1" Text="{Binding NumeroBoleto}"></Label>
                                 <Label HorizontalTextAlignment="Center" Background="white" Margin="1" Grid.Column="1" Text="{Binding NombrePersona}">
                                     <Label.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Source={x:Reference rifavm}, Path=NuevaVentaCommand}"
+                                        <TapGestureRecognizer Command="{Binding Source={x:Reference mainView},
+                                            Path=BindingContext.NuevaVentaCommand}"
                                                               CommandParameter="{Binding .}"></TapGestureRecognizer>
                                     </Label.GestureRecognizers>
                                 </Label>

@@ -15,6 +15,8 @@ namespace RifasMAUIApp.ViewModels
     {
 
         public ObservableCollection<Boleto> Boletos { get; set; } = new();
+        public IEnumerable<uint> NumerosSinVender =>
+            Boletos.Where(x => x.Id == 0).Select(x => x.NumeroBoleto).ToList();
 
         public Boleto Boleto { get; set; }
 
@@ -37,9 +39,27 @@ namespace RifasMAUIApp.ViewModels
             DescargarBoletos();
         }
 
-        private void Vender(object obj)
+        private async void Vender()
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (Connectivity.Current.NetworkAccess == NetworkAccess.Internet)
+                {
+                    BoletoDTO dto = new BoletoDTO()
+                    {
+                        NombrePersona = Boleto.NombrePersona,
+                        NumeroBoleto = Boleto.NumeroBoleto,
+                        Pagado = Boleto.Pagado ? 1ul : 0ul
+                    };
+                    await service.Post(dto);
+                    await Shell.Current.GoToAsync("//Main");
+                }
+                Actualizar();
+            }
+            catch (Exception ex)
+            {
+                Error = ex.Message;
+            }
         }
 
         private async void NuevaVenta(Boleto boleto)
@@ -50,7 +70,7 @@ namespace RifasMAUIApp.ViewModels
                 Actualizar();
                 await Shell.Current.GoToAsync("//Agregar");
             }
-            
+
 
         }
 
@@ -99,10 +119,10 @@ namespace RifasMAUIApp.ViewModels
                         NombrePersona = boletovendido.NombrePersona,
                         NumeroBoleto = boletovendido.NumeroBoleto,
                         NumeroTelefono = boletovendido.NumeroTelefono,
-                        Pagado = boletovendido.Pagado==1
+                        Pagado = boletovendido.Pagado == 1
                     };
 
-                    Boletos[(int)bvendido.NumeroBoleto-1] = bvendido;
+                    Boletos[(int)bvendido.NumeroBoleto - 1] = bvendido;
 
                 }
 

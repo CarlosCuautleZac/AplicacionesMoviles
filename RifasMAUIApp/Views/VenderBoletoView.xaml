@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="RifasMAUIApp.Views.VenderBoletoView"
+             xmlns:vm ="clr-namespace:RifasMAUIApp.ViewModels" x:DataType="vm:RifaViewModel"
              Title="VenderBoletoView" BackgroundColor="Gray">
 
     <Frame Background="white" Margin="15" CornerRadius="0">
@@ -10,16 +11,18 @@
             <Label HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="Large">Vender Boleto</Label>
             
             <Label Text="Número"></Label>
-            <Picker></Picker>
+            <Picker ItemsSource="{Binding NumerosSinVender}" SelectedItem="{Binding Boleto.NumeroBoleto}" ></Picker>
 
             <Label Text="Nombre:"></Label>
-            <Entry></Entry>
+            <Entry Text="{Binding Boleto.NombrePersona}" ></Entry>
 
             <Label Text="Telefono:"></Label>
-            <Entry Keyboard="Numeric"></Entry>
+            <Entry Text="{Binding Boleto.NumeroTelefono}"></Entry>
 
             <Label Text="Pagado:"></Label>
-            <CheckBox></CheckBox>
+            <CheckBox IsChecked="{Binding Boleto.Pagado}"></CheckBox>
+
+            <Button Command="{Binding VenderCommand}" Text="Vender"></Button>
         </VerticalStackLayout>
     </Frame>
     

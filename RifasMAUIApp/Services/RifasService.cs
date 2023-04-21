@@ -29,7 +29,7 @@ namespace RifasMAUIApp.Services
 
         }
 
-        public async void Post(BoletoDTO boleto)
+        public async Task Post(BoletoDTO boleto)
         {
             //Validar
             //Se supone que se tiene que validar en todo, nosotros menjamos el modelo de 3 capas
@@ -37,16 +37,26 @@ namespace RifasMAUIApp.Services
             //Logica de negocios
             //Modelo de Datos
 
-           await Send("api/rifas/pagar", boleto, HttpMethod.Post);
+           await Send("api/rifa/pagar", boleto, HttpMethod.Post);
         }
 
         async Task Send(string url, object dto, HttpMethod method)
         {
-            var json = JsonConvert.SerializeObject(dto);
-            HttpRequestMessage httpRequestMessagerequest = new HttpRequestMessage(method, url);
-            httpRequestMessagerequest.Content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await client.SendAsync(httpRequestMessagerequest);
-            response.EnsureSuccessStatusCode();
+            try
+            {
+                var json = JsonConvert.SerializeObject(dto);
+                HttpRequestMessage httpRequestMessagerequest = new HttpRequestMessage(method, url);
+                httpRequestMessagerequest.Content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await client.SendAsync(httpRequestMessagerequest);
+                response.EnsureSuccessStatusCode();
+            }
+            catch(Exception ex)
+            {
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+
+                });
+            }
         }
 
         public async void Put(BoletoDTO boleto)
